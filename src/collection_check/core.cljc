@@ -258,44 +258,130 @@
 ;;
 
 (defn assert-vector-like
-  "Asserts that the given empty collection behaves like a vector."
+  "Asserts that the given empty collection empty-coll behaves like a
+  vector.
+
+  This is a function intended only to be called from within a
+  clojure.test/deftest form, or some function called from within one.
+  Its return value is useless -- when called within a deftest form, it
+  will perform the expected side effects to update the number of
+  passed and/or failed tests.
+
+  num-tests-or-options is an integer number of tests to run, default
+  1000 if not specified.  It can optionally instead be a map of
+  options, as expected and documented by the test.chuck/checking
+  macro (see its documentation for details).
+
+  element-generator is a test.check generator that will be used to
+  generate elements to add to the vectors.
+
+  The last argument is an optional map, with these keys:
+
+  * :base - value is an empty vector used as the baseline of
+    comparison for correct behavior, default is a Clojure
+    PersistentVector [].
+
+  * :ordered? - value is a boolean. If true, then the randomly
+    generated sequences of actions to test will include those generated
+    by the return value of (seq-actions element-generator).  Default is
+    true."
   ([empty-coll element-generator]
      (assert-vector-like 1e3 empty-coll element-generator nil))
-  ([n empty-coll element-generator]
-     (assert-vector-like n empty-coll element-generator nil))
-  ([n empty-coll element-generator
+  ([num-tests-or-options empty-coll element-generator]
+     (assert-vector-like num-tests-or-options empty-coll element-generator nil))
+  ([num-tests-or-options empty-coll element-generator
     {:keys [base ordered?]
      :or {ordered? true
           base []}}]
-   (chuck/checking "vector-like" n
+   (chuck/checking "vector-like" num-tests-or-options
     [actions (gen-vector-actions element-generator (transient? empty-coll) ordered?)]
     (let [[a b actions] (build-collections empty-coll base true actions)]
       (assert-equivalent-vectors a b)))));)
 
 (defn assert-set-like
+  "Asserts that the given empty collection empty-coll behaves like a
+  set.
+
+  This is a function intended only to be called from within a
+  clojure.test/deftest form, or some function called from within one.
+  Its return value is useless -- when called within a deftest form, it
+  will perform the expected side effects to update the number of
+  passed and/or failed tests.
+
+  num-tests-or-options is an integer number of tests to run, default
+  1000 if not specified.  It can optionally instead be a map of
+  options, as expected and documented by the test.chuck/checking
+  macro (see its documentation for details).
+
+  element-generator is a test.check generator that will be used to
+  generate elements to add to the sets.
+
+  The last argument is an optional map, with these keys:
+
+  * :base - value is an empty set used as the baseline of
+    comparison for correct behavior, default is a Clojure
+    PersistentHashSet #{}.
+
+  * :ordered? - value is a boolean. If true, then the randomly
+    generated sequences of actions to test will include those generated
+    by the return value of (seq-actions element-generator).  Should only
+    be true if the set you wish to test is ordered, and if you do this,
+    the value of :base should also be an ordered set with the same
+    sorting order, e.g. the return value of sorted-set or sorted-set-by.
+    Default is false."
   ([empty-coll element-generator]
      (assert-set-like 1e3 empty-coll element-generator nil))
-  ([n empty-coll element-generator]
-     (assert-set-like n empty-coll element-generator nil))
-  ([n empty-coll element-generator
+  ([num-tests-or-options empty-coll element-generator]
+     (assert-set-like num-tests-or-options empty-coll element-generator nil))
+  ([num-tests-or-options empty-coll element-generator
     {:keys [base ordered?]
      :or {ordered? false
           base #{}}}]
-   (chuck/checking "set-like" n
+   (chuck/checking "set-like" num-tests-or-options
     [actions (gen-set-actions element-generator (transient? empty-coll) ordered?)]
     (let [[a b actions] (build-collections empty-coll base false actions)]
       (assert-equivalent-sets a b)))))
 
 (defn assert-map-like
+  "Asserts that the given empty collection empty-coll behaves like a
+  map.
+
+  This is a function intended only to be called from within a
+  clojure.test/deftest form, or some function called from within one.
+  Its return value is useless -- when called within a deftest form, it
+  will perform the expected side effects to update the number of
+  passed and/or failed tests.
+
+  num-tests-or-options is an integer number of tests to run, default
+  1000 if not specified.  It can optionally instead be a map of
+  options, as expected and documented by the test.chuck/checking
+  macro (see its documentation for details).
+
+  key-generator / value-generator is a test.check generator that will
+  be used to generate keys / values to add to the maps.
+
+  The last argument is an optional map, with these keys:
+
+  * :base - value is an empty map used as the baseline of
+    comparison for correct behavior, default is a Clojure
+    persistent map {}.
+
+  * :ordered? - value is a boolean. If true, then the randomly
+    generated sequences of actions to test will include those generated
+    by the return value of (seq-actions element-generator).  Should only
+    be true if the map you wish to test is ordered, and if you do this,
+    the value of :base should also be an ordered map with the same
+    sorting order, e.g. the return value of sorted-map or sorted-map-by.
+    Default is false."
   ([empty-coll key-generator value-generator]
      (assert-map-like 1e3 empty-coll key-generator value-generator nil))
-  ([n empty-coll key-generator value-generator]
-     (assert-map-like n empty-coll key-generator value-generator nil))
-  ([n empty-coll key-generator value-generator
+  ([num-tests-or-options empty-coll key-generator value-generator]
+     (assert-map-like num-tests-or-options empty-coll key-generator value-generator nil))
+  ([num-tests-or-options empty-coll key-generator value-generator
     {:keys [base ordered?]
      :or {ordered? false
           base {}}}]
-   (chuck/checking "map-like" n
+   (chuck/checking "map-like" num-tests-or-options
     [actions (gen-map-actions key-generator value-generator (transient? empty-coll) ordered?)]
     (let [[a b actions] (build-collections empty-coll base false actions)]
       (assert-equivalent-maps a b)))))
