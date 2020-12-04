@@ -190,6 +190,9 @@
 
 (defn assert-equivalent-vectors [a b]
   (assert-equivalent-collections a b)
+  (println "dbg assert-equivalent-vectors: START"
+           "(count a)=" (count a)
+           "(count b)=" (count b))
   (is (= (first a) (first b)))
   (is (= (map #(nth a %) (range (count a)))
          (map #(nth b %) (range (count b)))))
@@ -199,7 +202,11 @@
          (map #(get b %) (range (count b)))))
   #?(:clj (is (= (map #(.get ^List a %) (range (count a)))
                  (map #(.get ^List b %) (range (count b))))))
-  (is (= 0 (compare a b))))
+  (is (= 0 (compare a b)))
+  (println "dbg assert-equivalent-vectors: END  "
+           "(count a)=" (count a)
+           "(count b)=" (count b))
+  )
 
 (defn assert-equivalent-sets [a b]
   (assert-equivalent-collections a b)
