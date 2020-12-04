@@ -1,0 +1,36 @@
+{:paths ["src"]
+ :deps {org.clojure/test.check {:mvn/version "0.10.0"}
+        ;;com.gfredericks/test.chuck {:mvn/version "0.1.21"}
+        com.gfredericks/test.chuck {:mvn/version "0.2.10"}}
+ :aliases
+ {;; Common alias to use for all Clojure/Java commands
+  :clj {:jvm-opts ["-XX:-OmitStackTraceInFastThrow"]}
+  ;; Common alias to use for all ClojureScript commands
+  :cljs {:extra-deps {org.clojure/clojurescript {:mvn/version "1.10.520"}}
+         :jvm-opts ["-XX:-OmitStackTraceInFastThrow"]}
+
+  ;; - start a Clojure/Java Socket REPL on port 50505
+  :clj-socket {:jvm-opts ["-Dclojure.server.repl={:port,50505,:accept,clojure.core.server/repl}"]}
+  ;; start a Node-based ClojureScript socket REPL on port 50505
+  :cljs-socket {:jvm-opts ["-Dclojure.server.repl={:port,50505,:accept,cljs.server.node/repl}"]}
+
+  ;; Common alias to use for all Clojure/Java commands that run tests
+  :clj-test {:extra-paths ["test"]
+             :extra-deps {org.organicdesign/Paguro {:mvn/version "3.1.2"}}}
+  ;; Common alias to use for all ClojureScript commands that run tests
+  :cljs-test {:extra-paths ["test"]
+             :extra-deps {org.organicdesign/Paguro {:mvn/version "3.1.2"}}}
+
+  ;; Run 'short' tests
+  :clj-runt {:main-opts ["-e" "(require,'[clojure.test,:as,t],'clojure.core.rrb-vector.test-clj-only,'clojure.core.rrb-vector.test-common),(t/run-tests,'clojure.core.rrb-vector.test-common),(t/run-tests,'clojure.core.rrb-vector.test-clj-only)"]}
+  :cljs-runt {:main-opts ["-m" "cljs.main"
+                          "-re" "node"
+                          "-e" "(require,'[clojure.test,:as,t],'clojure.core.rrb-vector.test-cljs-only,'clojure.core.rrb-vector.test-common),(t/run-tests,'clojure.core.rrb-vector.test-common),(t/run-tests,'clojure.core.rrb-vector.test-cljs-only)"]}
+
+  ;; pull in specific versions of Clojure:
+  :1.7    {:override-deps {org.clojure/clojure {:mvn/version "1.7.0"}}}
+  :1.8    {:override-deps {org.clojure/clojure {:mvn/version "1.8.0"}}}
+  :1.9    {:override-deps {org.clojure/clojure {:mvn/version "1.9.0"}}}
+  :1.10.0 {:override-deps {org.clojure/clojure {:mvn/version "1.10.0"}}}
+  :1.10   {:override-deps {org.clojure/clojure {:mvn/version "1.10.1"}}}
+  :master {:override-deps {org.clojure/clojure {:mvn/version "1.11.0-master-SNAPSHOT"}}}}}
