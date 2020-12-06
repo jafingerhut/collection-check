@@ -286,7 +286,7 @@
     by the return value of (seq-actions element-generator).  Default is
     true."
   ([empty-coll element-generator]
-     (assert-vector-like 1e3 empty-coll element-generator nil))
+     (assert-vector-like 1000 empty-coll element-generator nil))
   ([num-tests-or-options empty-coll element-generator]
      (assert-vector-like num-tests-or-options empty-coll element-generator nil))
   ([num-tests-or-options empty-coll element-generator
@@ -330,7 +330,7 @@
     sorting order, e.g. the return value of sorted-set or sorted-set-by.
     Default is false."
   ([empty-coll element-generator]
-     (assert-set-like 1e3 empty-coll element-generator nil))
+     (assert-set-like 1000 empty-coll element-generator nil))
   ([num-tests-or-options empty-coll element-generator]
      (assert-set-like num-tests-or-options empty-coll element-generator nil))
   ([num-tests-or-options empty-coll element-generator
@@ -374,7 +374,7 @@
     sorting order, e.g. the return value of sorted-map or sorted-map-by.
     Default is false."
   ([empty-coll key-generator value-generator]
-     (assert-map-like 1e3 empty-coll key-generator value-generator nil))
+     (assert-map-like 1000 empty-coll key-generator value-generator nil))
   ([num-tests-or-options empty-coll key-generator value-generator]
      (assert-map-like num-tests-or-options empty-coll key-generator value-generator nil))
   ([num-tests-or-options empty-coll key-generator value-generator

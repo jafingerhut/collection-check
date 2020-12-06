@@ -22,10 +22,10 @@ nil
 true
 ```
 
-We can also specify the number of tests we'd like to perform, which defaults to `1000`:
+We can also specify the number of tests we'd like to perform, which defaults to `1000` (note that the number must be an integer, not a float or double):
 
 ```clj
-> (assert-vector-like 1e5 [] gen/int)
+> (assert-vector-like 10000 [] gen/int)
 true
 ```
 
