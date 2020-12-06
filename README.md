@@ -15,16 +15,17 @@ Since this is only for testing, it should be added as a `:dev` dependency:
 To validate a vector-like data structure, you can use `(assert-vector-like empty-collection element-generator)`.  For instance:
 
 ```clj
-> (require '[collection-check :refer :all])
+> (require '[clojure.test.check.generators :as gen])
+> (require '[collection-check.core :refer :all])
 nil
-> (assert-vector-like [] simple-check.generators/int)
+> (assert-vector-like [] gen/int)
 true
 ```
 
 We can also specify the number of tests we'd like to perform, which defaults to `1000`:
 
 ```clj
-> (assert-vector-like 1e5 [] simple-check.generators/int)
+> (assert-vector-like 1e5 [] gen/int)
 true
 ```
 
