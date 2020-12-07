@@ -1,12 +1,11 @@
 {:paths ["src"]
- :deps {org.clojure/test.check {:mvn/version "0.10.0"}
-        ;;com.gfredericks/test.chuck {:mvn/version "0.1.21"}
+ :deps {org.clojure/test.check {:mvn/version "1.1.0"}
         com.gfredericks/test.chuck {:mvn/version "0.2.10"}}
  :aliases
  {;; Common alias to use for all Clojure/Java commands
   :clj {:jvm-opts ["-XX:-OmitStackTraceInFastThrow"]}
   ;; Common alias to use for all ClojureScript commands
-  :cljs {:extra-deps {org.clojure/clojurescript {:mvn/version "1.10.520"}}
+  :cljs {:extra-deps {org.clojure/clojurescript {:mvn/version "1.10.773"}}
          :jvm-opts ["-XX:-OmitStackTraceInFastThrow"]}
 
   ;; - start a Clojure/Java Socket REPL on port 50505
@@ -14,10 +13,10 @@
   ;; start a Node-based ClojureScript socket REPL on port 50505
   :cljs-socket {:jvm-opts ["-Dclojure.server.repl={:port,50505,:accept,cljs.server.node/repl}"]}
 
-  ;; Common alias to use for all Clojure/Java commands that run tests
+  ;; Common alias to use for all commands that run tests, for
+  ;; Clojure/Java and ClojureScript
   :clj-test {:extra-paths ["test"]
              :extra-deps {org.organicdesign/Paguro {:mvn/version "3.1.2"}}}
-  ;; Common alias to use for all ClojureScript commands that run tests
   :cljs-test {:extra-paths ["test"]
              :extra-deps {org.organicdesign/Paguro {:mvn/version "3.1.2"}}}
 
